@@ -1,0 +1,38 @@
+body {
+  background: #000;
+  padding-top: 100px;
+  font-family: helvetica;
+  color: #666;
+}
+h1 {
+  text-transform: uppercase;
+  margin: 20px;
+  font-size: 20px;
+}
+a {
+  color: #666;
+}
+.matrix-frame {
+  width: 100%;
+  margin: 20px;
+  display: inline-block;
+}
+.matrix-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background-color: #333;
+}
+.matrix-dot.on {
+  background-color: #FFF;
+}
+.matrix-row {
+  text-align: center;
+}
+.matrix-dot-wrapper {
+  display: inline-block;
+  margin: 2px;
+}
+.matrix-character {
+  text-align: center;
+}

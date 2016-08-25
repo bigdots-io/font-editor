@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <h1>{{font}}</h1>
+    <div class="characters"></div>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="/matrix.js"></script>
+    <script>
+      $(function() {
+        $.get(`${window.location.pathname}?ajax=true`, function(data) {
+          var sortedCharacters = Object.keys(data).sort();
+          sortedCharacters.forEach(function(character) {
+            var matrix = new Matrix(character, "{{font}}", {width: 5, height: 6}, data[character]);
+            $('.characters').append(matrix.render({editable: true}).$el);
+          });
+        })
+      });
+    </script>
+  </body>
+</html>
