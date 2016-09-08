@@ -7,7 +7,7 @@ class Matrix {
   }
 
   render({editable}) {
-    this.$el = $(`<div data-character="${this.character}" class="matrix-frame" style="width: 140px">`);
+    this.$el = $(`<div data-character="${this.character}" class="matrix-frame" style="width: 170px">`);
 
     for(var y = 0; y < this.dimensions.height; y++) {
       var $row = $(`<div class="matrix-row">`);
@@ -58,7 +58,7 @@ class Matrix {
         });
         this.coordinates.splice(index, 1);
       }
-
+      
       $.ajax({
         type:'POST',
         url: `/${this.font}/character/${this.character}`,

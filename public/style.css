@@ -31,7 +31,7 @@ a {
 }
 .matrix-dot-wrapper {
   display: inline-block;
-  margin: 2px;
+  padding: 2px;
 }
 .matrix-character {
   text-align: center;

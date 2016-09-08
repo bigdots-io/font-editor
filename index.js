@@ -21,8 +21,8 @@ app.get('/:font/', function (req, res) {
       letter = req.params.letter;
 
   if(req.xhr) {
-    var characters = require(`${pathToFonts}/fonts/${font}/characters`);
-    res.json(characters || []);
+    var font = require(`${pathToFonts}/fonts/${font}`);
+    res.json(font || []);
   } else {
     res.render('font', {
       font: font
@@ -31,29 +31,51 @@ app.get('/:font/', function (req, res) {
 });
 
 app.get('/:font/character/:character', function (req, res) {
-  var font = req.params.font,
-      character = req.params.character;
+  var params = req.params;
 
   if(req.xhr) {
-    var characters = require(`${pathToFonts}/fonts/${font}/characters`);
+    var font = require(`${pathToFonts}/fonts/${params.font}`),
+        character = font.characters[params.character],
+        width,
+        height,
+        coordinates;
+
+    if(character) {
+      width = character.width || font.width;
+      height = character.height || font.height;
+      coordinates = character.coordinates || [];
+    } else {
+      width = font.width;
+      height = font.height;
+      coordinates = [];
+    }
+
     res.json({
-      character: character,
-      coordinates: characters[character] || []
+      character: params.character,
+      height: height,
+      width: width,
+      coordinates: coordinates
     });
   } else {
     res.render('character', {
-      font: font
+      font: params.font
     });
   }
 });
 
 app.post('/:font/character/:character', function (req, res) {
-  var font = req.params.font,
-      character = req.params.character;
+  var params = req.params;
 
-  var characters = require(`${pathToFonts}/fonts/${font}/characters`);
-  characters[character] = req.body.coordinates;
-  jsonfile.writeFile(`${pathToFonts}/fonts/${font}/characters.json`, characters, {spaces: 2}, function (err) {
+  var font = require(`${pathToFonts}/fonts/${params.font}`);
+  font.characters[params.character] = {
+    coordinates: req.body.coordinates
+  }
+
+  if(params.width) {
+    font.width = params.width
+  }
+
+  jsonfile.writeFile(`${pathToFonts}/fonts/${params.font}.json`, font, {spaces: 2}, function (err) {
     // something?
   });
   res.status(201).end();

@@ -10,7 +10,14 @@
       var coordinates;
       $(function() {
         $.get(`${window.location.pathname}?ajax=true`, function(data) {
-          var matrix = new Matrix(data.character, "{{font}}", {width: 5, height: 6}, data.coordinates);
+          console.log(data)
+          var coordinates = data.coordinates,
+              dimensions = {
+                width: data.width || data.width,
+                height: data.height || data.height
+              };
+
+          var matrix = new Matrix(data.character, "{{font}}", dimensions, coordinates);
           $('.character').append(matrix.render({editable: true}).$el);
         })
       });
