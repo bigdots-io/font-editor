@@ -6,6 +6,7 @@ body {
 }
 h1 {
   text-transform: uppercase;
+  font-family: 'Bungee';
 }
 a {
   color: #666;
@@ -14,6 +15,7 @@ a {
   width: 100%;
   margin: 20px;
   display: inline-block;
+  vertical-align: top;
 }
 .matrix-dot {
   width: 20px;
@@ -26,11 +28,13 @@ a {
 }
 .matrix-row {
   text-align: center;
+  display: flex;
 }
 .matrix-dot-wrapper {
   display: inline-block;
-  padding: 2px;
+  padding: 4px;
 }
 .matrix-character {
   text-align: center;
+  line-height: 20px;
 }
