@@ -5,6 +5,7 @@ var app = express();
 var mustacheExpress = require('mustache-express');
 var bodyParser = require('body-parser');
 var jsonfile = require('jsonfile');
+var fs = require('fs');
 
 var pathToFonts = '../typewriter';
 
@@ -16,7 +17,38 @@ app.use(express.static('public'));
 app.engine('html', mustacheExpress());
 app.set('view engine', 'html');
 
-app.get('/:font/', function (req, res) {
+app.get('/fonts', function (req, res) {
+  var fonts = [];
+
+  fs.readdir(`${pathToFonts}/fonts/`, function(err, items) {
+    items.forEach(function(item) {
+      if(item.match(/\.json/)) {
+        fonts.push(item.replace('.json', ''));
+      }
+    });
+    res.render('fonts/index', {
+      fonts: fonts
+    });
+  });
+});
+
+app.post('/fonts', function (req, res) {
+  var body = req.body;
+
+  var font = require('./font-template.json');
+  font.height = body.height
+  font.width = body.width
+
+  jsonfile.writeFile(`${pathToFonts}/fonts/${body.name}.json`, font, {spaces: 2}, function (err) {
+    res.redirect(`fonts/${body.name}`);
+  });
+});
+
+app.get('/fonts/new', function (req, res) {
+  res.render('fonts/new');
+});
+
+app.get('/fonts/:font', function (req, res) {
   var font = req.params.font,
       letter = req.params.letter;
 
@@ -24,13 +56,13 @@ app.get('/:font/', function (req, res) {
     var font = require(`${pathToFonts}/fonts/${font}`);
     res.json(font || []);
   } else {
-    res.render('font', {
+    res.render('fonts/show', {
       font: font
     });
   }
 });
 
-app.get('/:font/character/:character', function (req, res) {
+app.get('/fonts/:font/character/:character', function (req, res) {
   var params = req.params;
 
   if(req.xhr) {
@@ -63,7 +95,7 @@ app.get('/:font/character/:character', function (req, res) {
   }
 });
 
-app.post('/:font/character/:character', function (req, res) {
+app.post('/fonts/:font/character/:character', function (req, res) {
   var params = req.params;
 
   var font = require(`${pathToFonts}/fonts/${params.font}`);

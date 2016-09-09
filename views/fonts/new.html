@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12 col-sm-5 col-md-3">
+          <h1>new font</h1>
+          <form action="/fonts" method="post">
+            <div class="form-group">
+              <label for="name">Font name</label>
+              <input type="text" name="name" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="width">Character Width</label>
+              <select type="text" name="width" class="form-control">
+                <option value="4">4 dots</option>
+                <option value="5">5 dots</option>
+                <option value="6">6 dots</option>
+                <option value="7">7 dots</option>
+                <option value="8">8 dots</option>
+                <option value="9">9 dots</option>
+                <option value="10">10 dots</option>
+                <option value="11">11 dots</option>
+                <option value="12">12 dots</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="height">Character Height</label>
+              <select type="text" name="height" class="form-control">
+                <option value="4">4 dots</option>
+                <option value="5">5 dots</option>
+                <option value="6">6 dots</option>
+                <option value="7">7 dots</option>
+                <option value="8">8 dots</option>
+                <option value="9">9 dots</option>
+                <option value="10">10 dots</option>
+                <option value="11">11 dots</option>
+                <option value="12">12 dots</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-success">Create font</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+  </body>
+</html>

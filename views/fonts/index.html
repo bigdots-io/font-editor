@@ -1,9 +1,24 @@
 <html>
   <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
     <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
-    <h1>{{font}}</h1>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12 col-sm-5 col-md-3">
+          <h1>fonts</h1>
+          <ul>
+            {{#fonts}}
+              <li>
+                <a href="/fonts/{{.}}">{{.}}</a>
+              </li>
+            {{/fonts}}
+          </ul>
+          <a href="/fonts/new" class="btn btn-link">New Font</a>
+        </div>
+      </div>
+    </div>
     <div class="characters"></div>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
     <script src="/matrix.js"></script>
