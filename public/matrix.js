@@ -24,7 +24,7 @@ class Matrix {
 
     this.$el.append(`
       <div class="matrix-character">
-        <a href="${window.location.pathname}/character/${this.character}">${this.character}</a>
+        <a href="${window.location.pathname}/characters/${this.character}">${this.character}</a>
       </div>
     `);
 
@@ -62,7 +62,7 @@ class Matrix {
 
       $.ajax({
         type:'POST',
-        url: `/fonts/${this.font}/character/${this.character}`,
+        url: `/fonts/${this.font}/characters/${this.character}`,
         data: JSON.stringify({
           coordinates: this.coordinates
         }),
