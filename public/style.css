@@ -1,21 +1,39 @@
 body {
   background: #000;
-  padding-top: 100px;
   font-family: helvetica;
   color: #666;
 }
 h1 {
   text-transform: uppercase;
   font-family: 'Bungee';
+  margin: 0;
+  color: #333;
 }
 a {
   color: #666;
 }
+
+.navbar h1 {
+  padding-left: 10px;
+  text-shadow: -2px 1px 0px yellow;
+}
+.navbar {
+  margin-bottom: 50px;
+  background: linear-gradient(#AAA 50%, #BBB);
+}
+.navbar h1 a {
+  color: #333;
+  font-size: 2.5rem;
+  line-height: 1.1;
+  padding: 0;
+}
 .matrix-frame {
   width: 100%;
-  margin: 20px;
+  margin: 10px;
   display: inline-block;
   vertical-align: top;
+  z-index: 100;
+  position: relative;
 }
 .matrix-dot {
   width: 20px;
@@ -37,4 +55,16 @@ a {
 .matrix-character {
   text-align: center;
   line-height: 20px;
+}
+
+.card {
+  background: #666;
+  color: #EEE;
+  border: none;
+}
+
+a.btn.btn-primary {
+  background: #c7c74e;
+  color: #111;
+  border: none;
 }

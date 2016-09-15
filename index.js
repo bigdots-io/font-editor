@@ -9,6 +9,11 @@ var fs = require('fs');
 
 var pathToFonts = '../typewriter';
 
+var Fonts = {
+  'system-micro': require(`${pathToFonts}/fonts/system-micro`),
+  'system-medium': require(`${pathToFonts}/fonts/system-medium`)
+};
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
@@ -17,22 +22,27 @@ app.use(express.static('public'));
 app.engine('html', mustacheExpress());
 app.set('view engine', 'html');
 
-app.get('/fonts', function (req, res) {
+app.get('/', function (req, res) {
   var fonts = [];
 
-  fs.readdir(`${pathToFonts}/fonts/`, function(err, items) {
-    items.forEach(function(item) {
-      if(item.match(/\.json/)) {
-        fonts.push(item.replace('.json', ''));
-      }
+  for(var key in Fonts) {
+    fonts.push({
+      slug: key,
+      name: Fonts[key].name,
+      description: Fonts[key].description,
+      height: Fonts[key].height,
+      width: Fonts[key].width,
+      monospace: Fonts[key].monospace,
+      author: Fonts[key].author
     });
-    res.render('fonts/index', {
-      fonts: fonts
-    });
+  }
+
+  res.render('fonts/index', {
+    fonts: fonts
   });
 });
 
-app.post('/fonts', function (req, res) {
+app.post('/', function (req, res) {
   var body = req.body;
 
   var font = require('./font-template.json');
@@ -44,11 +54,11 @@ app.post('/fonts', function (req, res) {
   });
 });
 
-app.get('/fonts/new', function (req, res) {
+app.get('/new', function (req, res) {
   res.render('fonts/new');
 });
 
-app.get('/fonts/:font', function (req, res) {
+app.get('/:font', function (req, res) {
   var font = req.params.font,
       letter = req.params.letter;
 
@@ -62,7 +72,7 @@ app.get('/fonts/:font', function (req, res) {
   }
 });
 
-app.get('/fonts/:font/characters/:character', function (req, res) {
+app.get('/:font/characters/:character', function (req, res) {
   var params = req.params;
 
   if(req.xhr) {
@@ -96,35 +106,27 @@ app.get('/fonts/:font/characters/:character', function (req, res) {
   }
 });
 
-app.post('/fonts/:font/characters/:character', function (req, res) {
+app.post('/:font/characters/:character/coordinates', function (req, res) {
   var params = req.params;
 
-  var font = require(`${pathToFonts}/fonts/${params.font}`);
-  font.characters[params.character] = {
-    coordinates: req.body.coordinates
-  }
+  Fonts[params.font].characters[params.character].coordinates = req.body;
 
-  if(params.width) {
-    font.width = params.width
-  }
-
-  jsonfile.writeFile(`${pathToFonts}/fonts/${params.font}.json`, font, {spaces: 2}, function (err) {
-    // something?
+  jsonfile.writeFile(`${pathToFonts}/fonts/${params.font}.json`, Fonts[params.font], {spaces: 2}, function (err) {
+    res.status(201).end();
   });
-  res.status(201).end();
 })
 
-app.post('/fonts/:font/characters/:character/dimensions', function (req, res) {
+app.post('/:font/characters/:character/dimensions', function (req, res) {
   var body = req.body,
       params = req.params;
 
   var font = require(`${pathToFonts}/fonts/${params.font}`);
-  
+
   font.characters[params.character].width = body.width;
   font.characters[params.character].height = body.height;
 
   jsonfile.writeFile(`${pathToFonts}/fonts/${params.font}.json`, font, {spaces: 2}, function (err) {
-    res.redirect(`/fonts/${params.font}/characters/${params.character}`);
+    res.redirect(`/${params.font}/characters/${encodeURIComponent(params.character)}`);
   });
 })
 

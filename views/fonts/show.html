@@ -5,20 +5,51 @@
     <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
+    <header class="navbar navbar-static-top navbar-light bg-faded" style="border-radius: 0;">
+      <h1><a href="/" class="btn btn-link">Fonts</a> / {{font}}</h1>
+    </header>
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12">
-          <h1>{{font}}</h1>
-          <div class="characters"></div>
+          <div class="characters">
+            <div id="foo" style="padding-top: 200px; position: absolute; right: 0; left: 0; z-index: 0;"></div>
+          </div>
         </div>
       </div>
     </div>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>
     <script src="/matrix.js"></script>
     <script>
+      var opts = {
+        lines: 13 // The number of lines to draw
+      , length: 50 // The length of each line
+      , width: 5 // The line thickness
+      , radius: 42 // The radius of the inner circle
+      , scale: 1 // Scales overall size of the spinner
+      , corners: 0 // Corner roundness (0..1)
+      , color: '#FFF' // #rgb or #rrggbb or array of colors
+      , opacity: 0.25 // Opacity of the lines
+      , rotate: 0 // The rotation offset
+      , direction: 1 // 1: clockwise, -1: counterclockwise
+      , speed: 1 // Rounds per second
+      , trail: 60 // Afterglow percentage
+      , fps: 60 // Frames per second when using setTimeout() as a fallback for CSS
+      , zIndex: 2e9 // The z-index (defaults to 2000000000)
+      , className: 'spinner' // The CSS class to assign to the spinner
+      , top: '50%' // Top position relative to parent
+      , left: '50%' // Left position relative to parent
+      , shadow: false // Whether to render a shadow
+      , hwaccel: false // Whether to use hardware acceleration
+      , position: 'absolute' // Element positioning
+      }
+      var target = document.getElementById('foo')
+      var spinner = new Spinner(opts).spin(target);
+
       $(function() {
         $.get(`${window.location.pathname}?ajax=true`, function(data) {
           var sortedCharacters = Object.keys(data.characters).sort();
+          spinner.stop();
           sortedCharacters.forEach(function(character) {
             var coordinates = data.characters[character].coordinates,
                 dimensions = {
@@ -26,7 +57,10 @@
                   height: data.characters[character].height || data.height
                 };
 
-            var matrix = new Matrix(character, "{{font}}", dimensions, coordinates);
+            var matrix = new Matrix(character, "{{font}}", dimensions, coordinates, {
+              size: 5,
+              padding: 2
+            });
 
             $('.characters').append(matrix.render({editable: true}).$el);
           });

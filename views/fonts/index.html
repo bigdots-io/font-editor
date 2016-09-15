@@ -5,19 +5,23 @@
     <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
+    <header class="navbar navbar-static-top navbar-light bg-faded" style="border-radius: 0;">
+      <h1>Fonts</h1>
+    </header>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-xs-12 col-sm-5 col-md-3">
-          <h1>fonts</h1>
-          <ul>
-            {{#fonts}}
-              <li>
-                <a href="/fonts/{{.}}">{{.}}</a>
-              </li>
-            {{/fonts}}
-          </ul>
-          <a href="/fonts/new" class="btn btn-link">New Font</a>
-        </div>
+        {{#fonts}}
+          <div class="col-xs-12 col-sm-5 col-md-3">
+            <div class="card">
+              <img class="card-img-top" src="http://placehold.it/350x150" alt="Card image cap" width="100%">
+              <div class="card-block">
+                <h4 class="card-title">{{name}}</h4>
+                <p class="card-text">{{description}}</p>
+                <a href="/{{slug}}" class="btn btn-primary">View/edit</a>
+              </div>
+            </div>
+          </div>
+        {{/fonts}}
       </div>
     </div>
     <div class="characters"></div>
