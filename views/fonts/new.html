@@ -5,14 +5,28 @@
     <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
+    <header class="navbar navbar-static-top navbar-light bg-faded" style="border-radius: 0;">
+      <h1><a href="/" class="btn btn-link">Fonts</a> / New</h1>
+    </header>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-xs-12 col-sm-5 col-md-3">
-          <h1>new font</h1>
+        <div class="col-xs-12 col-sm-8 col-md-6">
           <form action="/fonts" method="post">
             <div class="form-group">
-              <label for="name">Font name</label>
-              <input type="text" name="name" class="form-control" />
+              <label for="name" class="col-form-label col-form-label-lg">Font name</label>
+              <input type="text" name="name" class="form-control form-control-lg" />
+            </div>
+            <div class="form-group">
+              <label for="name" class="col-form-label col-form-label-lg">Slug</label>
+              <input type="text" name="name" class="form-control form-control-lg" />
+            </div>
+            <div class="form-group">
+              <label for="name" class="col-form-label">Author</label>
+              <input type="text" name="author" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="name" class="col-form-label">Description</label>
+              <textarea type="text" name="description" class="form-control"></textarea>
             </div>
             <div class="form-group">
               <label for="width">Character Width</label>
