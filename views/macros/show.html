@@ -1,0 +1,63 @@
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
+    <link rel="stylesheet" href="/style.css" />
+    <style>
+    .frame {
+      width: 90vw;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      flex-wrap: wrap;
+      flex-direction: column;
+    }
+    .front {
+      padding: 10px;
+      margin: 0;
+      background: #000;
+    }
+    .matrix-row {
+      text-align: center;
+      display:flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .matrix-dot-wrapper {
+      text-align: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .display-meta {
+      width: 100%;
+    }
+
+    .matrix-dot {
+      height: 60%;
+      width: 60%;
+      display: inline-block;
+      background: #444;
+      border-radius: 100px;
+    }
+    </style>
+  </head>
+  <body>
+    <header class="navbar navbar-static-top navbar-light bg-faded" style="border-radius: 0;">
+      <h1><a href="/macros" class="btn btn-link">Macros</a> / {{ macro }}</h1>
+    </header>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="software-display" data-macro="{{ macro }}"></div>
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="/scripts/dist/main.bundle.js"></script>
+  </body>
+</html>

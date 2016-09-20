@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <header class="navbar navbar-static-top navbar-light bg-faded" style="border-radius: 0;">
+      <a href="/new" class="btn btn-primary btn-lg" style="float:right;">
+        New Macro
+      </a>
+      <h1>MACROS</h1>
+    </header>
+    <div class="container-fluid">
+      <div class="row">
+        {{#macros}}
+          <div class="col-xs-12 col-sm-5 col-md-3">
+            <div class="card">
+              <img class="card-img-top" src="http://placehold.it/350x150" alt="Card image cap" width="100%">
+              <div class="card-block">
+                <h4 class="card-title">{{name}}</h4>
+                <p class="card-text">{{description}}</p>
+                <a href="/macros/{{slug}}" class="btn btn-primary">View/edit</a>
+              </div>
+            </div>
+          </div>
+        {{/macros}}
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+  </body>
+</html>

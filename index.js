@@ -8,11 +8,14 @@ var jsonfile = require('jsonfile');
 var fs = require('fs');
 
 var pathToFonts = '../typewriter';
+var pathToMacros = '../macro-library';
 
 var Fonts = {
   'system-micro': require(`${pathToFonts}/fonts/system-micro`),
   'system-medium': require(`${pathToFonts}/fonts/system-medium`)
 };
+
+var Macros = require(`${pathToMacros}/macro-config`);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -23,6 +26,10 @@ app.engine('html', mustacheExpress());
 app.set('view engine', 'html');
 
 app.get('/', function (req, res) {
+  res.render('index');
+});
+
+app.get('/fonts', function (req, res) {
   var fonts = [];
 
   for(var key in Fonts) {
@@ -42,25 +49,36 @@ app.get('/', function (req, res) {
   });
 });
 
-app.post('/', function (req, res) {
-  var body = req.body;
+app.get('/macros', function (req, res) {
+  var macros = [];
 
-  var font = require('./font-template.json');
-  font.height = body.height
-  font.width = body.width
+  for(var key in Macros) {
+    macros.push({
+      slug: key,
+      name: Macros[key].name,
+      description: Macros[key].description
+    });
+  }
 
-  jsonfile.writeFile(`${pathToFonts}/fonts/${body.name}.json`, font, {spaces: 2}, function (err) {
-    res.redirect(`fonts/${body.name}`);
+  res.render('macros/index', {
+    macros: macros
   });
 });
 
-app.get('/new', function (req, res) {
+app.get('/macros/:macro', function (req, res) {
+  var macro = req.params.macro;
+
+  res.render('macros/show', {
+    macro: macro
+  });
+});
+
+app.get('/fonts/new', function (req, res) {
   res.render('fonts/new');
 });
 
-app.get('/:font', function (req, res) {
-  var font = req.params.font,
-      letter = req.params.letter;
+app.get('/fonts/:font', function (req, res) {
+  var font = req.params.font;
 
   if(req.xhr) {
     var font = require(`${pathToFonts}/fonts/${font}`);
@@ -72,7 +90,7 @@ app.get('/:font', function (req, res) {
   }
 });
 
-app.get('/:font/characters/:character', function (req, res) {
+app.get('/fonts/:font/characters/:character', function (req, res) {
   var params = req.params;
 
   if(req.xhr) {
@@ -106,7 +124,7 @@ app.get('/:font/characters/:character', function (req, res) {
   }
 });
 
-app.post('/:font/characters/:character/coordinates', function (req, res) {
+app.post('/fonts/:font/characters/:character/coordinates', function (req, res) {
   var params = req.params;
 
   Fonts[params.font].characters[params.character].coordinates = req.body;
@@ -116,7 +134,7 @@ app.post('/:font/characters/:character/coordinates', function (req, res) {
   });
 })
 
-app.post('/:font/characters/:character/dimensions', function (req, res) {
+app.post('/fonts/:font/characters/:character/dimensions', function (req, res) {
   var body = req.body,
       params = req.params;
 
