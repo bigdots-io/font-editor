@@ -24,6 +24,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^2.0.0",
     "gulp-watch": "^4.3.9",
+    "dot-matrix": "bigdots-io/dot-matrix.git#v0.1.0",
     "macro-library": "../macro-library",
     "serve-static": "^1.11.1",
     "vinyl-buffer": "^1.0.0",
