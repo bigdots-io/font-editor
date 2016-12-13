@@ -124,7 +124,7 @@ class Matrix {
 
       $.ajax({
         type:'POST',
-        url: `/${this.font}/characters/${encodeURIComponent(this.character)}/coordinates`,
+        url: `/fonts/${this.font}/characters/${encodeURIComponent(this.character)}/coordinates`,
         data: JSON.stringify(this.coordinates),
         contentType: 'application/json'
       });

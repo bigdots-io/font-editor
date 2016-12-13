@@ -7,15 +7,15 @@ var bodyParser = require('body-parser');
 var jsonfile = require('jsonfile');
 var fs = require('fs');
 
-var pathToFonts = '../typewriter';
-var pathToMacros = '../macro-library';
+var pathToFonts = '../fonts';
+var pathToMacros = '../macros';
 
 var Fonts = {
-  'system-micro': require(`${pathToFonts}/fonts/system-micro`),
-  'system-medium': require(`${pathToFonts}/fonts/system-medium`)
+  'system-6': require(`${pathToFonts}/system-6`),
+  'system-16': require(`${pathToFonts}/system-16`)
 };
 
-var Macros = require(`${pathToMacros}/macro-config`);
+//var Macros = require(`${pathToMacros}/macro-config`);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -81,7 +81,7 @@ app.get('/fonts/:font', function (req, res) {
   var font = req.params.font;
 
   if(req.xhr) {
-    var font = require(`${pathToFonts}/fonts/${font}`);
+    var font = require(`${pathToFonts}/${font}`);
     res.json(font || []);
   } else {
     res.render('fonts/show', {
@@ -94,7 +94,7 @@ app.get('/fonts/:font/characters/:character', function (req, res) {
   var params = req.params;
 
   if(req.xhr) {
-    var font = require(`${pathToFonts}/fonts/${params.font}`),
+    var font = require(`${pathToFonts}/${params.font}`),
         character = font.characters[params.character],
         width,
         height,
@@ -129,7 +129,7 @@ app.post('/fonts/:font/characters/:character/coordinates', function (req, res) {
 
   Fonts[params.font].characters[params.character].coordinates = req.body;
 
-  jsonfile.writeFile(`${pathToFonts}/fonts/${params.font}.json`, Fonts[params.font], {spaces: 2}, function (err) {
+  jsonfile.writeFile(`${pathToFonts}/${params.font}.json`, Fonts[params.font], {spaces: 2}, function (err) {
     res.status(201).end();
   });
 })
@@ -138,13 +138,13 @@ app.post('/fonts/:font/characters/:character/dimensions', function (req, res) {
   var body = req.body,
       params = req.params;
 
-  var font = require(`${pathToFonts}/fonts/${params.font}`);
+  var font = require(`${pathToFonts}/${params.font}`);
 
-  font.characters[params.character].width = body.width;
-  font.characters[params.character].height = body.height;
+  font.characters[params.character].width = parseInt(body.width, 10);
+  font.characters[params.character].height = parseInt(body.height, 10);
 
-  jsonfile.writeFile(`${pathToFonts}/fonts/${params.font}.json`, font, {spaces: 2}, function (err) {
-    res.redirect(`/${params.font}/characters/${encodeURIComponent(params.character)}`);
+  jsonfile.writeFile(`${pathToFonts}/${params.font}.json`, font, {spaces: 2}, function (err) {
+    res.redirect(`/fonts/${params.font}/characters/${encodeURIComponent(params.character)}`);
   });
 })
 
